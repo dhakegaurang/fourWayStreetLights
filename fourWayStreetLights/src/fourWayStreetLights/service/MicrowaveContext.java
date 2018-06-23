@@ -4,46 +4,65 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import microwaveOven.service.Car;
+import microwaveOven.service.NorthRedState;
+import microwaveOven.service.NorthGreenState;
+import microwaveOven.service.SouthRedState;
+import microwaveOven.service.SouthGreenState;
+import microwaveOven.service.WestRedState;
+import microwaveOven.service.WestGreenState;
+import microwaveOven.service.EastGreenState;
+import microwaveOven.service.EastRedState;
 
 public class MicrowaveContext implements MicrowaveStateI{
 	
-	private States currentState;
-	private enum States{
-		nothToAllRed, northToAllGreen, southToAllRed, southToAllGreen, eastToAllRed, eastToAllGreen, westToAllRed, westToAllGreen;
+	private MicrowaveStateI currentState;
+	private Queue<Car> carQueue;
+	private MicrowaveStateI NorthRedState, NorthGreenState, SouthRedState, SouthGreenState, WestRedState, WestGreenState, EastGreenState, EastRedState;
+	
+	public MicrowaveContext() {
 		
-		public States getNext() {
-		     return this.ordinal() < States.values().length - 1
-		         ? States.values()[this.ordinal() + 1]
-		         : null;
-		}
+		carQueue = new LinkedList<>();
+		NorthRedState = new NorthRedState(this);
+		NorthGreenState = new NorthGreenState(this);
+		SouthRedState = new SouthRedState(this);
+		SouthGreenState = new SouthGreenState(this);
+		WestRedState = new WestRedState(this);
+		WestGreenState = new WestGreenState(this);
+		EastGreenState = new EastGreenState(this);
+		EastRedState = new EastRedState(this);
+		currentState = NorthRedState;
 	}
-	private Queue<Car> carQueue = new LinkedList<>();
+	
+	
+	
+	@Override
+	public void toGreenCarPasses() {
+		currentState.toGreenCarPasses();
+	}
+
+	@Override
+	public void toRedCarStops() {
+		currentState.toRedCarStops();		
+	}
+
 	
 	@Override
 	public void addVehicle(String vehicleNumber, String inDirection) {
-		carQueue.add(new Car(vehicleNumber, inDirection));
-		
+		currentState.addVehicle(vehicleNumber, inDirection); 
 	}
 	
 	@Override
 	public void moveVehicle(String vehicleNumber) {
-		for(Car car : carQueue) {
-			if(car.getCarNumber().equals(vehicleNumber)) {
-				carQueue.remove(car);
-			}
-		}
+		currentState.moveVehicle(vehicleNumber); 
 	}
 	
-	@Override
-	public void twoCarPasses() {
-		// TODO Auto-generated method stub
-		
+	
+	public MicrowaveStateI getCurrentState() {
+		return currentState;
 	}
 
-	@Override
-	public void immediateTransitionFromGreenToRed() {
-		// TODO Auto-generated method stub
-		
+	public void setCurrentState(MicrowaveStateI currentState) {
+		this.currentState = currentState;
 	}
 
 	public Queue<Car> getCarQueue() {
@@ -54,12 +73,68 @@ public class MicrowaveContext implements MicrowaveStateI{
 		this.carQueue = carQueue;
 	}
 
-	public States getCurrentState() {
-		return currentState;
+	public MicrowaveStateI getNorthRedState() {
+		return NorthRedState;
 	}
 
-	public void setCurrentState(States currentState) {
-		this.currentState = currentState;
+	public void setNorthRedState(MicrowaveStateI northRedState) {
+		NorthRedState = northRedState;
+	}
+
+	public MicrowaveStateI getNorthGreenState() {
+		return NorthGreenState;
+	}
+
+	public void setNorthGreenState(MicrowaveStateI northGreenState) {
+		NorthGreenState = northGreenState;
+	}
+
+	public MicrowaveStateI getSouthRedState() {
+		return SouthRedState;
+	}
+
+	public void setSouthRedState(MicrowaveStateI southRedState) {
+		SouthRedState = southRedState;
+	}
+
+	public MicrowaveStateI getSouthGreenState() {
+		return SouthGreenState;
+	}
+
+	public void setSouthGreenState(MicrowaveStateI southGreenState) {
+		SouthGreenState = southGreenState;
+	}
+
+	public MicrowaveStateI getWestRedState() {
+		return WestRedState;
+	}
+
+	public void setWestRedState(MicrowaveStateI westRedState) {
+		WestRedState = westRedState;
+	}
+
+	public MicrowaveStateI getWestGreenState() {
+		return WestGreenState;
+	}
+
+	public void setWestGreenState(MicrowaveStateI westGreenState) {
+		WestGreenState = westGreenState;
+	}
+
+	public MicrowaveStateI getEastGreenState() {
+		return EastGreenState;
+	}
+
+	public void setEastGreenState(MicrowaveStateI eastGreenState) {
+		EastGreenState = eastGreenState;
+	}
+
+	public MicrowaveStateI getEastRedState() {
+		return EastRedState;
+	}
+
+	public void setEastRedState(MicrowaveStateI eastRedState) {
+		EastRedState = eastRedState;
 	}
 	
 }
