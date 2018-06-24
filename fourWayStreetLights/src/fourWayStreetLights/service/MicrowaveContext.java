@@ -3,6 +3,7 @@ package fourWayStreetLights.service;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import fourWayStreetLights.util.Results;
 import microwaveOven.service.NorthRedState;
 import microwaveOven.service.NorthGreenState;
 import microwaveOven.service.Vehicle;
@@ -12,37 +13,36 @@ public class MicrowaveContext implements MicrowaveStateI{
 	private MicrowaveStateI currentState;
 	private Queue<Vehicle> vehicleQueue;
 	private MicrowaveStateI NorthRedState, NorthGreenState/*, SouthRedState, SouthGreenState, WestRedState, WestGreenState, EastGreenState, EastRedState*/;
+	private Results resultObj;
 	
-	public MicrowaveContext() {
-		
+	public MicrowaveContext(Results resultObj) {
+		this.resultObj = resultObj;
 		vehicleQueue = new LinkedList<>();
-		NorthRedState = new NorthRedState(this);
-		NorthGreenState = new NorthGreenState(this);
+		NorthRedState = new NorthRedState(this,resultObj);
+		NorthGreenState = new NorthGreenState(this,resultObj);
 /*		SouthRedState = new SouthRedState(this);
 		SouthGreenState = new SouthGreenState(this);
 		WestRedState = new WestRedState(this);
 		WestGreenState = new WestGreenState(this);
 		EastGreenState = new EastGreenState(this);
 		EastRedState = new EastRedState(this);*/
-		currentState = NorthRedState;
 	}
 	
+	@Override
+	public void toGreenCarPasses(String direction) {
+		currentState.toGreenCarPasses(direction);
+	}
 	
 	@Override
-	public void toGreenCarPasses() {
-		currentState.toGreenCarPasses();
+	public void toRedCarStops(String direction) {
+		currentState.toRedCarStops(direction);		
 	}
-
-	@Override
-	public void toRedCarStops() {
-		currentState.toRedCarStops();		
-	}
-
 	
 	@Override
 	public void addVehicle(Vehicle vehicle, int status) {
 		if(status == 0) {
 			vehicleQueue.add(vehicle);
+			resultObj.storeNewResult(vehicle.getVehicleNumber()+" arrived in "+vehicle.getDirection()+" direction !!");
 		}
 		else if(status == 1) {
 			currentState.addVehicle(vehicle, status);
@@ -51,7 +51,7 @@ public class MicrowaveContext implements MicrowaveStateI{
 	}
 	
 	@Override
-	public void moveVehicle(String vehicleNumber) {
+	public void moveVehicle(String direction) {
 		/*for(Car car : carQueue) {
 			if(car.getCarNumber().equals(vehicleNumber)) {
 				carQueue.remove(car);

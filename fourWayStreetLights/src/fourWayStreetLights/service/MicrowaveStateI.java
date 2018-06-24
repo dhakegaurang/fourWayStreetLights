@@ -7,12 +7,12 @@ public interface MicrowaveStateI {
 	void addVehicle(Vehicle vehicle, int status);
 	
 	// Moving vehicle when green
-	void moveVehicle(String vehicleNumber);
+	void moveVehicle(String direction);
 	
 	// When signal becomes green, then before it turns red, two cars should go through
-	void toGreenCarPasses();
+	void toGreenCarPasses(String direction);
 	
 	// After two car passes through green signal, then current signal becomes red and other signal becomes green
-	void toRedCarStops();
+	void toRedCarStops(String direction);
 	
 }

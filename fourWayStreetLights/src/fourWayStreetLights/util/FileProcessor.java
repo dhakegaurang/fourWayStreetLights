@@ -25,9 +25,7 @@ public class FileProcessor {
 		    while ((line = bReaderObj.readLine()) != null) {
 		    	lineNo++;
 		       String[] dataArray = line.split("-");
-		       parseLine(dataArray,lineNo);
-		       
-		       
+		       parseLine(dataArray,lineNo);       
 		    }
 		}
 		catch(IOException  e) {
@@ -101,11 +99,11 @@ public class FileProcessor {
  				   case "north":
  					   if(signal.equalsIgnoreCase("red")) {
  						   microContextobj.setCurrentState(microContextobj.getNorthRedState()); 
- 						   microContextobj.toRedCarStops();
+ 						   microContextobj.toRedCarStops(direction);
  					   }
  					   else {
  						   microContextobj.setCurrentState(microContextobj.getNorthGreenState());
- 						   microContextobj.toGreenCarPasses();
+ 						   microContextobj.toGreenCarPasses(direction);
  					   }
  					   
  					   break;
