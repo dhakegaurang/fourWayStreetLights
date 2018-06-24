@@ -1,8 +1,7 @@
 package fourWayStreetLights.service;
 
-import microwaveOven.service.Vehicle;
 
-public interface MicrowaveStateI {
+public interface StreetLightsStateI {
 	// Adding the vehicle
 	void addVehicle(Vehicle vehicle, int status);
 	

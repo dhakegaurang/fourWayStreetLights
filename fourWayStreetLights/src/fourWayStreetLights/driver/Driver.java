@@ -1,12 +1,9 @@
 package fourWayStreetLights.driver;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 
-import fourWayStreetLights.service.MicrowaveContext;
+import fourWayStreetLights.service.StreetLightsContext;
 import fourWayStreetLights.util.FileProcessor;
 import fourWayStreetLights.util.Results;
-import microwaveOven.service.Vehicle;
 
 public class Driver {
 
@@ -16,8 +13,8 @@ public class Driver {
 		String outputFilePath = "output.txt";
 		
 		Results resultObj = new Results(outputFilePath);
-		MicrowaveContext microContextobj = new MicrowaveContext(resultObj);
-		FileProcessor fileProcessorObj = new FileProcessor(inputFilePath,microContextobj);
+		StreetLightsContext streetLightsContext = new StreetLightsContext(resultObj);
+		FileProcessor fileProcessorObj = new FileProcessor(inputFilePath,streetLightsContext);
 		fileProcessorObj.readLine();
 		System.out.println(resultObj.toString());		
 	}

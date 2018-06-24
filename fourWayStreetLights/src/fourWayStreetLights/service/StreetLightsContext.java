@@ -4,18 +4,15 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import fourWayStreetLights.util.Results;
-import microwaveOven.service.NorthRedState;
-import microwaveOven.service.NorthGreenState;
-import microwaveOven.service.Vehicle;
 
-public class MicrowaveContext implements MicrowaveStateI{
+public class StreetLightsContext implements StreetLightsStateI{
 	
-	private MicrowaveStateI currentState;
+	private StreetLightsStateI currentState;
 	private Queue<Vehicle> vehicleQueue;
-	private MicrowaveStateI NorthRedState, NorthGreenState/*, SouthRedState, SouthGreenState, WestRedState, WestGreenState, EastGreenState, EastRedState*/;
+	private StreetLightsStateI NorthRedState, NorthGreenState/*, SouthRedState, SouthGreenState, WestRedState, WestGreenState, EastGreenState, EastRedState*/;
 	private Results resultObj;
 	
-	public MicrowaveContext(Results resultObj) {
+	public StreetLightsContext(Results resultObj) {
 		this.resultObj = resultObj;
 		vehicleQueue = new LinkedList<>();
 		NorthRedState = new NorthRedState(this,resultObj);
@@ -57,14 +54,14 @@ public class MicrowaveContext implements MicrowaveStateI{
 				carQueue.remove(car);
 				System.out.println(car.getCarNumber()+" has passed the "+car.getDirection()+" signal!!");
 			}
-		}*/ 
+		}*/
 	}	
 	
-	public MicrowaveStateI getCurrentState() {
+	public StreetLightsStateI getCurrentState() {
 		return currentState;
 	}
 
-	public void setCurrentState(MicrowaveStateI currentState) {
+	public void setCurrentState(StreetLightsStateI currentState) {
 		this.currentState = currentState;
 	}
 
@@ -78,19 +75,19 @@ public class MicrowaveContext implements MicrowaveStateI{
 	}
 
 
-	public MicrowaveStateI getNorthRedState() {
+	public StreetLightsStateI getNorthRedState() {
 		return NorthRedState;
 	}
 
-	public void setNorthRedState(MicrowaveStateI northRedState) {
+	public void setNorthRedState(StreetLightsStateI northRedState) {
 		NorthRedState = northRedState;
 	}
 
-	public MicrowaveStateI getNorthGreenState() {
+	public StreetLightsStateI getNorthGreenState() {
 		return NorthGreenState;
 	}
 
-	public void setNorthGreenState(MicrowaveStateI northGreenState) {
+	public void setNorthGreenState(StreetLightsStateI northGreenState) {
 		NorthGreenState = northGreenState;
 	}
 	

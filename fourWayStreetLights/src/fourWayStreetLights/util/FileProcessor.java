@@ -4,17 +4,18 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import fourWayStreetLights.service.MicrowaveContext;
-import microwaveOven.service.Vehicle;
+import fourWayStreetLights.service.StreetLightsContext;
+import fourWayStreetLights.service.Vehicle;
+
 
 public class FileProcessor {
 	private String inputFilePath;
 	private BufferedReader bReaderObj;
-	private MicrowaveContext microContextobj;
+	private StreetLightsContext streetLightsContext;
 	
-	public FileProcessor(String inputFilePath, MicrowaveContext microContextobj) {
+	public FileProcessor(String inputFilePath, StreetLightsContext streetLightsContext) {
 		this.inputFilePath = inputFilePath;
-		this.microContextobj = microContextobj;
+		this.streetLightsContext = streetLightsContext;
 	}
 	
 	public void readLine() {
@@ -79,7 +80,7 @@ public class FileProcessor {
 			    	   else {
 			    		   throw new IllegalArgumentException("Exception: missing car direction at line no: "+lineNo);
 			    	   }
-			    	   microContextobj.addVehicle(new Vehicle(carNumber, direction), status);
+			    	   streetLightsContext.addVehicle(new Vehicle(carNumber, direction), status);
 				   
 			   }
 			   else if(dataArray[0].equals("signal")) {
@@ -98,43 +99,43 @@ public class FileProcessor {
 				   switch(direction) {
  				   case "north":
  					   if(signal.equalsIgnoreCase("red")) {
- 						   microContextobj.setCurrentState(microContextobj.getNorthRedState()); 
- 						   microContextobj.toRedCarStops(direction);
+ 						   streetLightsContext.setCurrentState(streetLightsContext.getNorthRedState()); 
+ 						   streetLightsContext.toRedCarStops(direction);
  					   }
  					   else {
- 						   microContextobj.setCurrentState(microContextobj.getNorthGreenState());
- 						   microContextobj.toGreenCarPasses(direction);
+ 						   streetLightsContext.setCurrentState(streetLightsContext.getNorthGreenState());
+ 						   streetLightsContext.toGreenCarPasses(direction);
  					   }
  					   
  					   break;
  				   /*case "east":
  					   if(signal.equalsIgnoreCase("red")) {
- 						   microContextobj.setCurrentState(microContextobj.getEastRedState()); 
- 						  microContextobj.toRedCarStops();
+ 						   streetLightsContext.setCurrentState(streetLightsContext.getEastRedState()); 
+ 						  streetLightsContext.toRedCarStops();
  					   }
  					   else {
- 						   microContextobj.setCurrentState(microContextobj.getEastGreenState());
- 						   microContextobj.toGreenCarPasses();
+ 						   streetLightsContext.setCurrentState(streetLightsContext.getEastGreenState());
+ 						   streetLightsContext.toGreenCarPasses();
  					   }
  					   break;
  				   case "south":
  					   if(signal.equalsIgnoreCase("red")) {
- 						   microContextobj.setCurrentState(microContextobj.getSouthRedState()); 
- 						  microContextobj.toRedCarStops();
+ 						   streetLightsContext.setCurrentState(streetLightsContext.getSouthRedState()); 
+ 						  streetLightsContext.toRedCarStops();
  					   }
  					   else {
- 						   microContextobj.setCurrentState(microContextobj.getSouthGreenState());
- 						   microContextobj.toGreenCarPasses();
+ 						   streetLightsContext.setCurrentState(streetLightsContext.getSouthGreenState());
+ 						   streetLightsContext.toGreenCarPasses();
  					   }
  					   break;
  				   case "west":
  					   if(signal.equalsIgnoreCase("red")) {
- 						   microContextobj.setCurrentState(microContextobj.getWestRedState()); 
- 						  microContextobj.toRedCarStops();
+ 						   streetLightsContext.setCurrentState(streetLightsContext.getWestRedState()); 
+ 						  streetLightsContext.toRedCarStops();
  					   }
  					   else {
- 						   microContextobj.setCurrentState(microContextobj.getWestGreenState());
- 						   microContextobj.toGreenCarPasses();
+ 						   streetLightsContext.setCurrentState(streetLightsContext.getWestGreenState());
+ 						   streetLightsContext.toGreenCarPasses();
  					   }
  					   break;*/
 					   default: throw new IllegalArgumentException("Exception: invalid direction at line no: "+lineNo);
