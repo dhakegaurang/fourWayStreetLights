@@ -3,13 +3,14 @@ package fourWayStreetLights.service;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import fourWayStreetLights.entity.Vehicle;
 import fourWayStreetLights.util.Results;
 
 public class StreetLightsContext implements StreetLightsStateI{
 	
 	private StreetLightsStateI currentState;
 	private Queue<Vehicle> vehicleQueue;
-	private StreetLightsStateI NorthRedState, NorthGreenState/*, SouthRedState, SouthGreenState, WestRedState, WestGreenState, EastGreenState, EastRedState*/;
+	private StreetLightsStateI NorthRedState, NorthGreenState, SouthRedState, SouthGreenState, WestRedState, WestGreenState, EastGreenState, EastRedState;
 	private Results resultObj;
 	
 	public StreetLightsContext(Results resultObj) {
@@ -17,45 +18,68 @@ public class StreetLightsContext implements StreetLightsStateI{
 		vehicleQueue = new LinkedList<>();
 		NorthRedState = new NorthRedState(this,resultObj);
 		NorthGreenState = new NorthGreenState(this,resultObj);
-/*		SouthRedState = new SouthRedState(this);
-		SouthGreenState = new SouthGreenState(this);
-		WestRedState = new WestRedState(this);
-		WestGreenState = new WestGreenState(this);
-		EastGreenState = new EastGreenState(this);
-		EastRedState = new EastRedState(this);*/
+		SouthRedState = new SouthRedState(this,resultObj);
+		SouthGreenState = new SouthGreenState(this,resultObj);
+		WestRedState = new WestRedState(this,resultObj);
+		WestGreenState = new WestGreenState(this,resultObj);
+		EastGreenState = new EastGreenState(this,resultObj);
+		EastRedState = new EastRedState(this,resultObj);
 	}
 	
 	@Override
 	public void toGreenCarPasses(String direction) {
 		currentState.toGreenCarPasses(direction);
 	}
-	
+
 	@Override
 	public void toRedCarStops(String direction) {
-		currentState.toRedCarStops(direction);		
+		currentState.toRedCarStops(direction);
 	}
-	
+
 	@Override
-	public void addVehicle(Vehicle vehicle, int status) {
-		if(status == 0) {
-			vehicleQueue.add(vehicle);
-			resultObj.storeNewResult(vehicle.getVehicleNumber()+" arrived in "+vehicle.getDirection()+" direction !!");
+	public void addVehicle(Vehicle vehicle) {
+		if(currentState == null) {
+			int noOfVehicles = vehicle.getNoOfVehicles();
+			for(int i=1;i<=noOfVehicles;i++) {
+				vehicleQueue.add(vehicle);
+			}
+			resultObj.storeNewResult("\nState of machine: All signals are red");
+			resultObj.storeNewResult("\n"+noOfVehicles+" car(s) arrived in "+vehicle.getDirection()+" direction");
+			trackAllVehicles();
 		}
-		else if(status == 1) {
-			currentState.addVehicle(vehicle, status);
+		else {
+			currentState.addVehicle(vehicle);
 		}
-		
 	}
 	
 	@Override
 	public void moveVehicle(String direction) {
-		/*for(Car car : carQueue) {
-			if(car.getCarNumber().equals(vehicleNumber)) {
-				carQueue.remove(car);
-				System.out.println(car.getCarNumber()+" has passed the "+car.getDirection()+" signal!!");
-			}
-		}*/
+		
 	}	
+	
+	public void trackAllVehicles() {
+		int northVehicles=0;
+		int southVehicles = 0;
+		int eastVehicles = 0;
+		int westVehicles = 0;
+		for(Vehicle currentVehicle : vehicleQueue) {
+			switch(currentVehicle.getDirection()) {
+			case "north":northVehicles++;
+				break;
+			case "south":southVehicles++;
+				break;
+			case "east":eastVehicles++;
+				break;
+			case "west":westVehicles++;
+				break;
+			}
+		}
+		resultObj.storeNewResult("\n\nNorth has "+northVehicles+" vehicles");
+		resultObj.storeNewResult("\nSouth has "+southVehicles+" vehicles");
+		resultObj.storeNewResult("\nEast has "+eastVehicles+" vehicles");
+		resultObj.storeNewResult("\nWest has "+westVehicles+" vehicles");
+		resultObj.storeNewResult("\n-------------------------------------------");
+	}
 	
 	public StreetLightsStateI getCurrentState() {
 		return currentState;
@@ -78,7 +102,7 @@ public class StreetLightsContext implements StreetLightsStateI{
 	public StreetLightsStateI getNorthRedState() {
 		return NorthRedState;
 	}
-
+	
 	public void setNorthRedState(StreetLightsStateI northRedState) {
 		NorthRedState = northRedState;
 	}
@@ -89,6 +113,54 @@ public class StreetLightsContext implements StreetLightsStateI{
 
 	public void setNorthGreenState(StreetLightsStateI northGreenState) {
 		NorthGreenState = northGreenState;
+	}
+
+	public StreetLightsStateI getSouthRedState() {
+		return SouthRedState;
+	}
+
+	public void setSouthRedState(StreetLightsStateI southRedState) {
+		SouthRedState = southRedState;
+	}
+
+	public StreetLightsStateI getSouthGreenState() {
+		return SouthGreenState;
+	}
+
+	public void setSouthGreenState(StreetLightsStateI southGreenState) {
+		SouthGreenState = southGreenState;
+	}
+
+	public StreetLightsStateI getWestRedState() {
+		return WestRedState;
+	}
+
+	public void setWestRedState(StreetLightsStateI westRedState) {
+		WestRedState = westRedState;
+	}
+
+	public StreetLightsStateI getWestGreenState() {
+		return WestGreenState;
+	}
+
+	public void setWestGreenState(StreetLightsStateI westGreenState) {
+		WestGreenState = westGreenState;
+	}
+
+	public StreetLightsStateI getEastGreenState() {
+		return EastGreenState;
+	}
+
+	public void setEastGreenState(StreetLightsStateI eastGreenState) {
+		EastGreenState = eastGreenState;
+	}
+
+	public StreetLightsStateI getEastRedState() {
+		return EastRedState;
+	}
+
+	public void setEastRedState(StreetLightsStateI eastRedState) {
+		EastRedState = eastRedState;
 	}
 	
 }

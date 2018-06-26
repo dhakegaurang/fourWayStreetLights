@@ -1,9 +1,10 @@
 package fourWayStreetLights.service;
 
+import fourWayStreetLights.entity.Vehicle;
 
 public interface StreetLightsStateI {
 	// Adding the vehicle
-	void addVehicle(Vehicle vehicle, int status);
+	void addVehicle(Vehicle vehicle);
 	
 	// Moving vehicle when green
 	void moveVehicle(String direction);

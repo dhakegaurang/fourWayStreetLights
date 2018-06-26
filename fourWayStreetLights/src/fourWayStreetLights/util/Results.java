@@ -23,7 +23,6 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface{
 	
 	public void storeNewResult(String newResult) {
 		resultStr += newResult;
-		resultStr += "\n";
 	}
 
 	@Override

@@ -4,8 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+import fourWayStreetLights.entity.Vehicle;
 import fourWayStreetLights.service.StreetLightsContext;
-import fourWayStreetLights.service.Vehicle;
 
 
 public class FileProcessor {
@@ -47,7 +47,7 @@ public class FileProcessor {
 	    	   String carNumber;
 	    	   String direction; 
 	    	   String signal;
-	    	   int status = -1;
+	    	   int iterations = -1;
 	    	   if(dataArray[0] != null) {
 	    		   type = dataArray[0];
 	    	   }
@@ -56,7 +56,10 @@ public class FileProcessor {
 	    	   }
 	    	   if(dataArray[3] != null) {
 	    		   try {
-	    			   status = Integer.parseInt(dataArray[3]);
+	    			   iterations = Integer.parseInt(dataArray[3]);
+	    			   if(iterations <= 0) {
+	    				   throw new NumberFormatException();
+	    			   }
 	    		   }
 	    		   catch(NumberFormatException e) {
 	    			   System.err.println("Exception: parsing error at line no: "+lineNo);
@@ -80,7 +83,7 @@ public class FileProcessor {
 			    	   else {
 			    		   throw new IllegalArgumentException("Exception: missing car direction at line no: "+lineNo);
 			    	   }
-			    	   streetLightsContext.addVehicle(new Vehicle(carNumber, direction), status);
+			    	   streetLightsContext.addVehicle(new Vehicle(carNumber, direction,iterations));
 				   
 			   }
 			   else if(dataArray[0].equals("signal")) {
@@ -100,7 +103,7 @@ public class FileProcessor {
  				   case "north":
  					   if(signal.equalsIgnoreCase("red")) {
  						   streetLightsContext.setCurrentState(streetLightsContext.getNorthRedState()); 
- 						   streetLightsContext.toRedCarStops(direction);
+ 						  streetLightsContext.toGreenCarPasses(direction);
  					   }
  					   else {
  						   streetLightsContext.setCurrentState(streetLightsContext.getNorthGreenState());
@@ -108,36 +111,36 @@ public class FileProcessor {
  					   }
  					   
  					   break;
- 				   /*case "east":
+ 				   case "east":
  					   if(signal.equalsIgnoreCase("red")) {
  						   streetLightsContext.setCurrentState(streetLightsContext.getEastRedState()); 
- 						  streetLightsContext.toRedCarStops();
+ 						  streetLightsContext.toGreenCarPasses(direction);
  					   }
  					   else {
  						   streetLightsContext.setCurrentState(streetLightsContext.getEastGreenState());
- 						   streetLightsContext.toGreenCarPasses();
+ 						   streetLightsContext.toGreenCarPasses(direction);
  					   }
  					   break;
  				   case "south":
  					   if(signal.equalsIgnoreCase("red")) {
  						   streetLightsContext.setCurrentState(streetLightsContext.getSouthRedState()); 
- 						  streetLightsContext.toRedCarStops();
+ 						  streetLightsContext.toGreenCarPasses(direction);
  					   }
  					   else {
  						   streetLightsContext.setCurrentState(streetLightsContext.getSouthGreenState());
- 						   streetLightsContext.toGreenCarPasses();
+ 						   streetLightsContext.toGreenCarPasses(direction);
  					   }
  					   break;
  				   case "west":
  					   if(signal.equalsIgnoreCase("red")) {
  						   streetLightsContext.setCurrentState(streetLightsContext.getWestRedState()); 
- 						  streetLightsContext.toRedCarStops();
+ 						  streetLightsContext.toGreenCarPasses(direction);
  					   }
  					   else {
  						   streetLightsContext.setCurrentState(streetLightsContext.getWestGreenState());
- 						   streetLightsContext.toGreenCarPasses();
+ 						   streetLightsContext.toGreenCarPasses(direction);
  					   }
- 					   break;*/
+ 					   break;
 					   default: throw new IllegalArgumentException("Exception: invalid direction at line no: "+lineNo);
 					   
 				   }
