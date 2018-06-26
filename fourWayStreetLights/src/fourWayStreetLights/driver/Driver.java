@@ -16,7 +16,8 @@ public class Driver {
 		StreetLightsContext streetLightsContext = new StreetLightsContext(resultObj);
 		FileProcessor fileProcessorObj = new FileProcessor(inputFilePath,streetLightsContext);
 		fileProcessorObj.readLine();
-		System.out.println(resultObj.toString());		
+		//System.out.println(resultObj.toString());
+		resultObj.writeToFile(resultObj.getResultStr());
 	}
 	
 }

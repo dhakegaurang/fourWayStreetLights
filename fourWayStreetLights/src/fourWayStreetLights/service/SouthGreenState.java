@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import fourWayStreetLights.entity.Vehicle;
+import fourWayStreetLights.util.Logger;
 import fourWayStreetLights.util.Results;
 
 /**
@@ -17,6 +18,7 @@ public class SouthGreenState implements StreetLightsStateI{
 	private String myState;
 	
 	public SouthGreenState(StreetLightsContext streetLightsContext, Results resultObj) {
+		Logger.writeMessage("entering SouthGreenState constructor", Logger.setDebugValue(7));
 		this.streetLightsContext = streetLightsContext;
 		this.resultObj = resultObj;
 		myState = "SouthGreenState";
@@ -24,6 +26,7 @@ public class SouthGreenState implements StreetLightsStateI{
 	
 	@Override
 	public void addVehicle(Vehicle vehicle) {
+		Logger.writeMessage("entering addVehicle in SouthGreenState", Logger.setDebugValue(7));
 		int iterations = vehicle.getNoOfVehicles();
 		for(int i=1;i<=iterations;i++) {
 			streetLightsContext.getVehicleQueue().add(vehicle);
@@ -31,12 +34,11 @@ public class SouthGreenState implements StreetLightsStateI{
 		resultObj.storeNewResult("\nState of machine: "+myState);
 		resultObj.storeNewResult("\n"+iterations+" car(s) arrived in "+vehicle.getDirection()+" direction");
 		toGreenCarPasses(vehicle.getDirection());
-		//resultObj.storeNewResult("\n-------------------------------------------");
 	}
 
 	@Override
 	public void moveVehicle(String direction) {
-		//Queue<Vehicle> vehicleQueue = streetLightsContext.getVehicleQueue();
+		Logger.writeMessage("entering moveVehicle in SouthGreenState", Logger.setDebugValue(7));
 		Iterator<Vehicle> vehicleQueueIterator = streetLightsContext.getVehicleQueue().iterator();
 		Queue<Vehicle> vehicleQueueAdd = new LinkedList<>();
 		int noOfVehicles = 0;
@@ -56,12 +58,14 @@ public class SouthGreenState implements StreetLightsStateI{
 
 	@Override
 	public void toGreenCarPasses(String direction) {
+		Logger.writeMessage("entering toGreenCarPasses in SouthGreenState", Logger.setDebugValue(7));
 		moveVehicle(direction);
 	}
 
 	@Override
 	public void toRedCarStops(String direction) {
-		
+		Logger.writeMessage("entering toRedCarStops in SouthGreenState", Logger.setDebugValue(7));
+		moveVehicle(direction);
 	}
 
 	public String getMyState() {

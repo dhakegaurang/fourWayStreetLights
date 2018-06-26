@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import fourWayStreetLights.entity.Vehicle;
+import fourWayStreetLights.util.Logger;
 import fourWayStreetLights.util.Results;
 
 /**
@@ -17,6 +18,7 @@ public class EastGreenState implements StreetLightsStateI{
 	private String myState;
 	
 	public EastGreenState(StreetLightsContext streetLightsContext, Results resultObj) {
+		Logger.writeMessage("entering constructor in eastgreenstate class", Logger.setDebugValue(3));
 		this.streetLightsContext = streetLightsContext;
 		this.resultObj = resultObj;
 		myState = "EastGreenState";
@@ -24,6 +26,7 @@ public class EastGreenState implements StreetLightsStateI{
 	
 	@Override
 	public void addVehicle(Vehicle vehicle) {
+		Logger.writeMessage("entering addVehicle in eastgreenstate class", Logger.setDebugValue(3));
 		int iterations = vehicle.getNoOfVehicles();
 		for(int i=1;i<=iterations;i++) {
 			streetLightsContext.getVehicleQueue().add(vehicle);
@@ -36,6 +39,7 @@ public class EastGreenState implements StreetLightsStateI{
 
 	@Override
 	public void moveVehicle(String direction) {
+		Logger.writeMessage("entering moveVehicle in eastgreenstate class", Logger.setDebugValue(3));
 		//Queue<Vehicle> vehicleQueue = streetLightsContext.getVehicleQueue();
 		Iterator<Vehicle> vehicleQueueIterator = streetLightsContext.getVehicleQueue().iterator();
 		Queue<Vehicle> vehicleQueueAdd = new LinkedList<>();
@@ -56,12 +60,14 @@ public class EastGreenState implements StreetLightsStateI{
 
 	@Override
 	public void toGreenCarPasses(String direction) {
+		Logger.writeMessage("entering toGreenCarPasses in eastgreenstate class", Logger.setDebugValue(3));
 		moveVehicle(direction);
 	}
 
 	@Override
 	public void toRedCarStops(String direction) {
-		
+		Logger.writeMessage("entering toRedCarStops in eastgreenstate class", Logger.setDebugValue(3));
+		moveVehicle(direction);
 	}
 
 	public String getMyState() {

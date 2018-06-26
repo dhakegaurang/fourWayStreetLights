@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import fourWayStreetLights.entity.Vehicle;
+import fourWayStreetLights.util.Logger;
 import fourWayStreetLights.util.Results;
 
 public class StreetLightsContext implements StreetLightsStateI{
@@ -14,6 +15,7 @@ public class StreetLightsContext implements StreetLightsStateI{
 	private Results resultObj;
 	
 	public StreetLightsContext(Results resultObj) {
+		Logger.writeMessage("entering streetlightscontructor constructor in context class", Logger.setDebugValue(11));
 		this.resultObj = resultObj;
 		vehicleQueue = new LinkedList<>();
 		NorthRedState = new NorthRedState(this,resultObj);
@@ -28,16 +30,19 @@ public class StreetLightsContext implements StreetLightsStateI{
 	
 	@Override
 	public void toGreenCarPasses(String direction) {
+		Logger.writeMessage("entering toGreenCarPasses method in context class", Logger.setDebugValue(11));
 		currentState.toGreenCarPasses(direction);
 	}
 
 	@Override
 	public void toRedCarStops(String direction) {
+		Logger.writeMessage("entering toRedCarStops method in context class", Logger.setDebugValue(11));
 		currentState.toRedCarStops(direction);
 	}
 
 	@Override
 	public void addVehicle(Vehicle vehicle) {
+		Logger.writeMessage("entering addVehicle method in context class", Logger.setDebugValue(11));
 		if(currentState == null) {
 			int noOfVehicles = vehicle.getNoOfVehicles();
 			for(int i=1;i<=noOfVehicles;i++) {
@@ -54,7 +59,7 @@ public class StreetLightsContext implements StreetLightsStateI{
 	
 	@Override
 	public void moveVehicle(String direction) {
-		
+		Logger.writeMessage("entering moveVehicle method in context class", Logger.setDebugValue(11));
 	}	
 	
 	public void trackAllVehicles() {

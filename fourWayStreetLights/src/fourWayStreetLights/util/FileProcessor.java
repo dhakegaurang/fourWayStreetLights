@@ -14,11 +14,13 @@ public class FileProcessor {
 	private StreetLightsContext streetLightsContext;
 	
 	public FileProcessor(String inputFilePath, StreetLightsContext streetLightsContext) {
+		Logger.writeMessage("entering fileprocessor constructor", Logger.setDebugValue(1));
 		this.inputFilePath = inputFilePath;
 		this.streetLightsContext = streetLightsContext;
 	}
 	
 	public void readLine() {
+		Logger.writeMessage("entering fileprocessor readline method", Logger.setDebugValue(1));
 		try{
 			bReaderObj = new BufferedReader(new FileReader(inputFilePath));
 		    String line;
