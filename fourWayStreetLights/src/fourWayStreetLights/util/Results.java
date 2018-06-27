@@ -5,12 +5,22 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import fourWayStreetLights.util.Logger.DebugLevel;
-
+/**
+* Results program is responsible for storing results
+*
+* @author  Gaurang Dhake
+* @version 1.0
+* @since   06/27/18 
+*/
 public class Results implements FileDisplayInterface, StdoutDisplayInterface{
 	private String resultStr;
 	private String outputFilePath;
 	private DebugLevel debugLevel;
 	
+	/**
+	   * This constructor sets to local outputFilePath variable, initializes resultStr and sets debugLeve as well
+	   * @param outputFilePath brings output file path from driver class
+	   */
 	public Results(String outputFilePath) {
 		this.debugLevel = DebugLevel.RESULTS;
 		Logger.writeMessage("entering results constructor in results class", debugLevel);
@@ -22,7 +32,12 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface{
 	public void writeToStdout(String s) {
 		
 	}
-
+	
+	/**
+	   * This writeToFile method writes result to output file
+	   * @param s this parameter stores all result strings
+	   * @return None since return type is void
+	   */
 	@Override
 	public void writeToFile(String s) {
 		Logger.writeMessage("entering writeToFile method in results class", debugLevel);
@@ -36,7 +51,11 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface{
 		}
 			
 	}
-	
+	/**
+	   * This storeNewResult method keeps appending new result string in main string
+	   * @param newResult this parameter brings new string result
+	   * @return None since return type is void
+	   */
 	public void storeNewResult(String newResult) {
 		resultStr += newResult;
 	}
