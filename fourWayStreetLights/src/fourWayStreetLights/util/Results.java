@@ -4,13 +4,17 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import fourWayStreetLights.util.Logger.DebugLevel;
+
 public class Results implements FileDisplayInterface, StdoutDisplayInterface{
 	private String resultStr;
 	private String outputFilePath;
+	private DebugLevel debugLevel;
 	
 	public Results(String outputFilePath) {
-		Logger.writeMessage("entering results constructor in results class", Logger.setDebugValue(2));
-		resultStr = "";
+		this.debugLevel = DebugLevel.RESULTS;
+		Logger.writeMessage("entering results constructor in results class", debugLevel);
+		resultStr = "";	
 		this.outputFilePath = outputFilePath;
 	}
 
@@ -21,7 +25,7 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface{
 
 	@Override
 	public void writeToFile(String s) {
-		Logger.writeMessage("entering writeToFile method in results class", Logger.setDebugValue(2));
+		Logger.writeMessage("entering writeToFile method in results class", debugLevel);
 		try {
 			Files.write(Paths.get(outputFilePath), s.getBytes());
 		}

@@ -6,6 +6,7 @@ import java.util.Queue;
 
 import fourWayStreetLights.entity.Vehicle;
 import fourWayStreetLights.util.Logger;
+import fourWayStreetLights.util.Logger.DebugLevel;
 import fourWayStreetLights.util.Results;
 
 /**
@@ -16,17 +17,19 @@ public class EastGreenState implements StreetLightsStateI{
 	private StreetLightsContext streetLightsContext;
 	private Results resultObj;
 	private String myState;
+	private DebugLevel debugLevel;
 	
 	public EastGreenState(StreetLightsContext streetLightsContext, Results resultObj) {
-		Logger.writeMessage("entering constructor in eastgreenstate class", Logger.setDebugValue(3));
+		this.debugLevel = DebugLevel.EASTGREENSTATE;
+		Logger.writeMessage("entering constructor in eastgreenstate class", debugLevel);
 		this.streetLightsContext = streetLightsContext;
 		this.resultObj = resultObj;
-		myState = "EastGreenState";
+		myState = "EastGreenState";	
 	}
 	
 	@Override
 	public void addVehicle(Vehicle vehicle) {
-		Logger.writeMessage("entering addVehicle in eastgreenstate class", Logger.setDebugValue(3));
+		Logger.writeMessage("entering addVehicle in eastgreenstate class", debugLevel);
 		int iterations = vehicle.getNoOfVehicles();
 		for(int i=1;i<=iterations;i++) {
 			streetLightsContext.getVehicleQueue().add(vehicle);
@@ -39,7 +42,7 @@ public class EastGreenState implements StreetLightsStateI{
 
 	@Override
 	public void moveVehicle(String direction) {
-		Logger.writeMessage("entering moveVehicle in eastgreenstate class", Logger.setDebugValue(3));
+		Logger.writeMessage("entering moveVehicle in eastgreenstate class", debugLevel);
 		//Queue<Vehicle> vehicleQueue = streetLightsContext.getVehicleQueue();
 		Iterator<Vehicle> vehicleQueueIterator = streetLightsContext.getVehicleQueue().iterator();
 		Queue<Vehicle> vehicleQueueAdd = new LinkedList<>();
@@ -60,13 +63,13 @@ public class EastGreenState implements StreetLightsStateI{
 
 	@Override
 	public void toGreenCarPasses(String direction) {
-		Logger.writeMessage("entering toGreenCarPasses in eastgreenstate class", Logger.setDebugValue(3));
+		Logger.writeMessage("entering toGreenCarPasses in eastgreenstate class", debugLevel);
 		moveVehicle(direction);
 	}
 
 	@Override
 	public void toRedCarStops(String direction) {
-		Logger.writeMessage("entering toRedCarStops in eastgreenstate class", Logger.setDebugValue(3));
+		Logger.writeMessage("entering toRedCarStops in eastgreenstate class", debugLevel);
 		moveVehicle(direction);
 	}
 

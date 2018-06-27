@@ -30,10 +30,6 @@ public class Logger{
 		return debugLevel;
     }
 
-    public static void setDebugValue (DebugLevel levelIn) {
-    	debugLevel = levelIn;
-    }
-
     public static void writeMessage (String message, DebugLevel levelIn ) {
 		if (levelIn == debugLevel)
 		    System.out.println(message);
